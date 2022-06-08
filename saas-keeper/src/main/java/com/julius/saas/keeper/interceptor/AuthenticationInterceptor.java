@@ -1,6 +1,6 @@
 package com.julius.saas.keeper.interceptor;
 
-import com.julius.saas.common.utils.TokenUtil;
+import com.julius.saas.keeper.utils.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;

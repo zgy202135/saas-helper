@@ -14,10 +14,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -43,9 +40,21 @@ public class LoginService implements InitializingBean {
     private Map<From, Function<Login, String>> loginStrategy;
 
 
+    /**
+     * 用户登录
+     * @param login 登录信息
+     * @return token
+     * @throws SaasException 异常
+     */
+    public String login(Login login) throws SaasException {
+        final From from = login.getFrom();
+        Function<Login, String> function = loginStrategy.get(from);
 
-
-
+        if (Objects.isNull(function)){
+            throw new SaasException(SaasException.PRARAM_FAIL,StrUtil.format("用户来源[{}]不支持",from.name()));
+        }
+        return function.apply(login);
+    }
 
 
     @Override
